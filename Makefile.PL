@@ -1,8 +1,8 @@
 # Makefile.PL -- Makefile for Text::Filter
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Wed Feb 24 09:10:44 1999
-# Update Count    : 3
+# Last Modified On: Fri Mar 26 09:52:08 1999
+# Update Count    : 10
 # Status          : Stable
 
 # Verify perl version.
@@ -11,6 +11,16 @@ require 5.000;
 use ExtUtils::MakeMaker;
 
 my @scripts = qw();
+
+if ( $] < 5.005 ) {
+    print STDERR <<EOD;
+
+Module Text::Filter has been developed using Perl 5.005.
+I expect it to work with your version of Perl ($]) as well.
+Please let me know so I can adjust the requirements.
+
+EOD
+}
 
 WriteMakefile
   (

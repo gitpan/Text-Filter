@@ -1,10 +1,10 @@
 package Text::Filter;
 
-# RCS Info        : $Id: TextFilter.pm,v 1.6 1999-03-19 14:37:40+01 jv Exp $
+# RCS Info        : $Id: TextFilter.pm,v 1.7 1999-03-26 10:08:05+01 jv Exp $
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Fri Mar 19 15:12:26 1999
-# Update Count    : 29
+# Last Modified On: Fri Mar 26 09:45:36 1999
+# Update Count    : 31
 # Status          : Released
 
 =head1 NAME
@@ -371,9 +371,8 @@ GNU General Public License or the Artistic License for more details.
 use strict;
 
 BEGIN {
-    require 5.005;
     use vars qw($VERSION);
-    ($VERSION) = '$Revision: 1.6 $ ' =~ /: ([\d.]+)/;
+    ($VERSION) = '$Revision: 1.7 $ ' =~ /: ([\d.]+)/;
 }
 
 use IO;
