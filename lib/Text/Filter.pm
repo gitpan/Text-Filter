@@ -1,11 +1,11 @@
 package Text::Filter;
 
-# RCS Info        : $Id: TextFilter.pm,v 1.3 1999-02-24 09:06:05+01 jv Exp $
+# RCS Info        : $Id: TextFilter.pm,v 1.5 1999-03-07 16:26:18+01 jv Exp $
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Wed Feb 24 09:05:23 1999
-# Update Count    : 12
-# Status          : Unknown, Use with caution!
+# Last Modified On: Sun Mar  7 16:22:32 1999
+# Update Count    : 16
+# Status          : Released
 
 =head1 NAME
 
@@ -114,7 +114,7 @@ This routine will be called to get the next line of data.
 
 =back
 
-For C<input>:
+For C<output>:
 
 =over
 
@@ -142,7 +142,7 @@ Output lines will be push()ed into the array.
 =item *
 
 A reference to an anonymous subroutine.
-This routine will be called to append a line of text to the dstination.
+This routine will be called to append a line of text to the destination.
 
 =back
 
@@ -346,7 +346,7 @@ use strict;
 BEGIN {
     require 5.005;
     use vars qw($VERSION);
-    $VERSION = "0.01";
+    ($VERSION) = '$Revision: 1.5 $ ' =~ /: ([\d.]+)/;
 }
 
 use IO;

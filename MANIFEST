@@ -1,4 +1,5 @@
 MANIFEST
+README
 Makefile.PL
 lib/Text/Filter.pm
 t/basic.t
