@@ -1,0 +1,6 @@
+MANIFEST
+Makefile.PL
+lib/Text/Filter.pm
+t/basic.t
+t/testfile
+t/testfilter.pl
