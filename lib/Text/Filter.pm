@@ -1,10 +1,10 @@
 package Text::Filter;
 
-# RCS Info        : $Id: TextFilter.pm,v 1.5 1999-03-07 16:26:18+01 jv Exp $
+# RCS Info        : $Id: TextFilter.pm,v 1.6 1999-03-19 14:37:40+01 jv Exp $
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Sun Mar  7 16:22:32 1999
-# Update Count    : 16
+# Last Modified On: Fri Mar 19 15:12:26 1999
+# Update Count    : 29
 # Status          : Released
 
 =head1 NAME
@@ -32,8 +32,9 @@ that they process text lines by reading from some source (usually a
 file), manipulating the contents and writing something back to some
 destination (usually some other file).
 
-This module should be used by deriving modules from it. See section
-EXAMPLES for an extensive example.
+This module can be used on itself, but it is most powerfull when used
+to derive modules from it. See section EXAMPLES for an extensive
+example.
 
 =head1 DESCRIPTION
 
@@ -48,6 +49,19 @@ call the module to process this data as if it were read from a file.
 Also, the input stream provides a pushback functionality to make
 peeking at the input easy.
 
+C<Text::Filter> can be used on its own as a convenient input/output
+handler. For example:
+
+    use Text::Filter;
+    my $filter = new Text::Filter (input = *STDIN, output = *STDOUT);
+    my $line;
+    while (defined ($line = $filter->readline)) {
+        $filter->writeline ($line);
+    }
+
+Its real power shows when such a program is turned into a module for
+optimal reuse.
+
 When creating a module that is to process lines of text, it can be
 derived from C<Text::Filter>, for example:
 
@@ -58,7 +72,7 @@ derived from C<Text::Filter>, for example:
 	@ISA = qw(Text::Filter);
     }
 
-The constructor method must call the new() method of the
+The constructor method must then call the new() method of the
 C<Text::Filter> class to set up the base class. This is conveniently
 done by calling SUPER::new(). A hash containing attributes must be
 passed to this method, some of these attributes will be used by the
@@ -138,6 +152,13 @@ Lines will be written using print().
 
 A reference to an array.
 Output lines will be push()ed into the array.
+The array will be initialised to C<()> if necessary.
+
+=item *
+
+A reference to a scalar.
+Output lines will be appended to the scalar.
+The scalar will be initialised to C<""> if necessary.
 
 =item *
 
@@ -230,6 +251,12 @@ there is no more input.
 =item $filter->pushback ($line)
 
 Pushes a line of text back to the input stream.
+Returns the line.
+
+=item $filter->peek
+
+Peeks at the input.
+Short for pushback(readline()).
 
 =item $filter->writeline ($line)
 
@@ -346,7 +373,7 @@ use strict;
 BEGIN {
     require 5.005;
     use vars qw($VERSION);
-    ($VERSION) = '$Revision: 1.5 $ ' =~ /: ([\d.]+)/;
+    ($VERSION) = '$Revision: 1.6 $ ' =~ /: ([\d.]+)/;
 }
 
 use IO;
@@ -417,7 +444,7 @@ sub set_input {
 	}
     }
     $self->{_filter_postread} = $posthandler;
-
+    $self->{_filter_pushback} = [];
     $self;
 }
 
@@ -431,6 +458,11 @@ sub set_output {
 	}
 	elsif ( ref($handler) eq 'ARRAY' ) {
 	    $output = sub { push (@$handler, shift) };
+	    @$handler = () unless defined @$handler;
+	}
+	elsif ( ref($handler) eq 'SCALAR' ) {
+	    $output = sub { $$handler .= shift };
+	    $$handler = "" unless defined $$handler;
 	}
 	elsif ( ref($handler) eq 'CODE' ) {
 	    $output = $handler;
@@ -475,8 +507,8 @@ sub set_output {
 sub readline {
     my ($self) = shift;
 
-    return delete ($self->{_filter_pushback})
-      if exists ($self->{_filter_pushback});
+    return shift (@{$self->{_filter_pushback}})
+      if @{$self->{_filter_pushback}} > 0;
 
     my $line;
     my $input = $self->{_filter_input};
@@ -491,9 +523,15 @@ sub readline {
 
 sub pushback {
     my ($self, $line) = @_;
-    croak ("pushback buffer is occupied")
-      if exists ($self->{_filter_pushback});
-    $self->{_filter_pushback} = $line;
+    push (@{$self->{_filter_pushback}}, $line);
+    $line;
+}
+
+sub peek {
+    my ($self) = @_;
+    return $self->{_filter_pushback}->[0]
+      if @{$self->{_filter_pushback}} > 0;
+    $self->pushback ($self->readline);
 }
 
 sub get_input {
@@ -508,8 +546,10 @@ sub writeline {
 	if ( $prewrite ne '' ) {
 	    $line = $prewrite->($line);
 	}
-	else {
-	    $line .= $/;
+	elsif ( defined $/ ) {
+	    # Add the line terminator.
+	    # In paragraph mode, just add two newlines.
+	    $line .= ($/ eq '' ? "\n\n" : $/);
 	}
     }
     $self->{_filter_output}->($line);

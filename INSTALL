@@ -1,0 +1,13 @@
+To install, unpack the archive, change to the unpacked directory, and
+type:
+
+    perl Makefile.PL
+    make all
+    make install
+
+----------------------------------------------------------------------------
+Johan Vromans                                           jvromans@squirrel.nl
+Squirrel Consultancy                                Haarlem, the Netherlands
+http://www.squirrel.nl                http://www.squirrel.nl/people/jvromans
+PGP Key 2048/4783B14D     http://www.squirrel.nl/people/jvromans/pgpkey.html
+----------------------- "Arms are made for hugging" ------------------------

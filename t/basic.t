@@ -9,16 +9,16 @@ my @catch = ();
 
 my $expect =
   "Red Hat Linux release 5.2 (Apollo)\n".
-  "Kernel 2.2.1 on an i686\n".
+  "Kernel 2.2.3 on an i686\n".
   "Mandatory\n";
 
-print "1..6\n";
+print "1..7\n";
 
 # Quickie.
 @catch = ();
 Grepper::grepper ("t/testfile",
 		  sub { push (@catch, shift) },
-		  qr/a/);
+		  "a");
 print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 1\n");
 
 # File -> code
@@ -26,7 +26,7 @@ print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 1\n");
 $f = new Grepper
   input => "t/testfile",
   output => sub { push (@catch, shift) };
-$f->grep(qr/a/);
+$f->grep("a");
 print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 2\n");
 
 # code -> code, chomp
@@ -36,7 +36,7 @@ $f = new Grepper
   input => sub { shift(@inp) },
   input_postread => 'chomp',
   output => sub { push (@catch, shift(@_)."\n") };
-$f->grep(qr/a/);
+$f->grep("a");
 print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 3\n");
 
 # code -> code, newline
@@ -47,7 +47,7 @@ $f = new Grepper
   input => sub { shift(@inp) },
   output_prewrite => 'newline',
   output => sub { push (@catch, shift(@_)) };
-$f->grep(qr/a/);
+$f->grep("a");
 print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 4\n");
 
 # array -> array
@@ -56,7 +56,7 @@ print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 4\n");
 $f = new Grepper
   input => \@inp,
   output => \@catch;
-$f->grep(qr/a/);
+$f->grep("a");
 print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 5\n");
 
 # File -> array
@@ -66,6 +66,15 @@ open (FD, "t/testfile");
 $f = new Grepper
   input => *FD,
   output => \@catch;
-$f->grep(qr/a/);
+$f->grep("a");
 print STDOUT ((join('',@catch) eq $expect) ? "" : "not ", "ok 6\n");
+
+# array -> scalar
+@inp = @catch;
+my $catch;
+$f = new Grepper
+  input => \@inp,
+  output => \$catch;
+$f->grep("a");
+print STDOUT (($catch eq $expect) ? "" : "not ", "ok 7\n");
 

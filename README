@@ -21,8 +21,8 @@ process text lines by reading from some source (usually a file),
 manipulating the contents and writing something back to some
 destination (usually some other file).
 
-This module should be used by deriving modules from it. See the
-documentation for an extensive example.
+This module can be used 'as is', but its real power shows when used to
+derive modules from it. See the documentation for extensive examples.
 
 FEATURES
 
@@ -41,6 +41,10 @@ instance methods:
  * pushback ($line)
 
    Pushes a line of text back to the input stream.
+
+ * peek ()
+
+   Peeks at the input. Short for pushback(readline()).
 
 When creating a new instance of this module, the input and output (or
 only one of them) must be specified.
@@ -69,6 +73,9 @@ For output:
 
  * An instance of class IO::File. Lines will be written using print().
 
+ * A reference to a scalar. Output lines will be appended to the
+   scalar.
+
  * A reference to an array. Output lines will be push()ed into the
    array.
 
@@ -78,13 +85,6 @@ For output:
 Additional attributes can be used to specify actions to be performed
 after the data is fetched, or prior to being written. For example, to
 strip line endings upon input, and add them upon output.
-
-To install, unpack the archive, change to the unpacked directory, and
-type:
-
-    perl Makefile.PL
-    make all
-    make install
 
 ----------------------------------------------------------------------------
 Johan Vromans                                           jvromans@squirrel.nl

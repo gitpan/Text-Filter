@@ -1,5 +1,8 @@
 MANIFEST
 README
+CHANGES
+INSTALL
+AVAILABILITY
 Makefile.PL
 lib/Text/Filter.pm
 t/basic.t

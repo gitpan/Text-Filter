@@ -1,0 +1,22 @@
+Text::Filter 1.6
+================
+
+ * Fix appending newlines when prewrite is chomp and $/ is "".
+
+ * New output type: scalar.
+
+ * 'pushback' now returns its argument for convenience.
+ 
+ * The pushback buffer is now of unlimited (Perl-wise) capacity.
+
+ * New function: peek. 
+   Short for pushback(readline()).
+
+ * Enhance documentation.
+
+ * New files (kit only): INSTALL, AVAILABILITY, CHANGES.
+
+Text::Filter 1.5
+================
+
+ * First public release.
