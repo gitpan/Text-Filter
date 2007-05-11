@@ -10,40 +10,11 @@ package Grepper;
 
 use strict;
 
-use Text::Filter;
+use base qw(Text::Filter);
+use base qw(Exporter);
+our @EXPORT = qw(grepper);
 
-# Setup.
-BEGIN {
-    use vars qw(@ISA);
-    @ISA = ();
-
-    # This class exports static method, so we need Exporter:
-    use Exporter;
-    use vars qw(@EXPORT);
-    @EXPORT = qw(grepper);
-    push (@ISA, qw(Exporter));
-
-    # This class derives from Text::Filter.
-    push (@ISA, qw(Text::Filter));
-}
-
-# Constructor. Major part of the job is done by the superclass.
-sub new {
-    my $proto = shift;
-    my $class = ref($proto) || $proto;
-
-    # Create a new instance by calling the superclass constructor.
-    my $self = $class->SUPER::new(@_);
-    # Note that the superclass constructor will take care of handling
-    # the input and output attributes, and setup everything for
-    # handling the IO.
-
-    # Bless the object into the desired class.
-    bless ($self, $class);
-
-    # And return it.
-    $self;
-}
+# Constructor. All is done by the superclass.
 
 # Instance method, just an example. No magic.
 sub grep {

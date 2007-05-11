@@ -1,28 +1,18 @@
 # Makefile.PL -- Makefile for Text::Filter
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Fri Mar 26 09:52:08 1999
-# Update Count    : 10
+# Last Modified On: Thu May  3 14:46:55 2007
+# Update Count    : 21
 # Status          : Stable
 
 # Verify perl version.
-require 5.000;
+require 5.006;
 
 use ExtUtils::MakeMaker;
 
 my @scripts = qw();
 
-if ( $] < 5.005 ) {
-    print STDERR <<EOD;
-
-Module Text::Filter has been developed using Perl 5.005.
-I expect it to work with your version of Perl ($]) as well.
-Please let me know so I can adjust the requirements.
-
-EOD
-}
-
-WriteMakefile
+my $x = WriteMakefile
   (
    NAME         => 'Text::Filter',
    ($] >= 5.005)
@@ -30,7 +20,27 @@ WriteMakefile
        ABSTRACT	=> 'Base class for line based text processing modules',
       ) : (),
    VERSION_FROM => "lib/Text/Filter.pm",
-   PREREQ_PM	=> { 'IO' => 0 },
+   PREREQ_PM	=> { 'IO::File' => 0,
+		     'Test::More' => 0,
+		   },
    # EXE_FILES    => [ map { "scripts/$_" } @scripts ],
    # *.pm files will be picked up automatically from ./lib
  );
+
+my $name    = $x->{NAME};
+my $version = $x->{VERSION};
+
+my $fh;
+(my $mname = "$name") =~ s'::'-'g;
+my $fname = "perl-$mname.spec";
+if ( open ($fh, "$fname.in") ) {
+    print "Writing RPM spec file...\n";
+    my $newfh;
+    open ($newfh, ">$fname");
+    while ( <$fh> ) {
+	s/%define modname .+/%define modname $mname/;
+	s/%define modversion \d+\.\d+/%define modversion $version/;
+	print $newfh $_;
+    }
+    close($newfh);
+}

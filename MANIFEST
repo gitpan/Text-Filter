@@ -2,9 +2,12 @@ MANIFEST
 README
 CHANGES
 INSTALL
-AVAILABILITY
 Makefile.PL
 lib/Text/Filter.pm
-t/basic.t
-t/testfile
-t/testfilter.pl
+lib/Text/Filter/Cooked.pm
+t/00basic.t
+t/01simple.t
+t/10cooked.t
+examples/testfilter.pl
+perl-Text-Filter.spec
+META.yml                                 Module meta-data (added by MakeMaker)
