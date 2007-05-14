@@ -1,10 +1,11 @@
 package Text::Filter::Cooked;
 
 use strict;
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 use base q{Text::Filter};
 use Carp;
-use Encode;
+
+# later use Encode;
 
 =head1 NAME
 

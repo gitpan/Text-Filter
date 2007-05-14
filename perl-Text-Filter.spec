@@ -1,5 +1,5 @@
 %define modname Text-Filter
-%define modversion 1.8
+%define modversion 1.9
 %define modpath authors/id/J/JV/JV/%{modname}-%{modversion}.tar.gz
 %define modreq perl
 

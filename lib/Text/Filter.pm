@@ -1,10 +1,10 @@
 package Text::Filter;
 
-# CVS Info        : $Id: Filter.pm,v 1.9 2007/05/11 16:20:25 jv Exp $
+# CVS Info        : $Id: Filter.pm,v 1.10 2007/05/14 07:34:07 jv Exp $
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Fri May 11 18:20:21 2007
-# Update Count    : 163
+# Last Modified On: Mon May 14 09:29:39 2007
+# Update Count    : 164
 # Status          : Released
 
 =head1 NAME
@@ -407,7 +407,7 @@ use strict;
 use warnings;
 use warnings::register;
 
-our $VERSION = "1.8";
+our $VERSION = "1.9";
 
 use IO::File;
 use Carp;

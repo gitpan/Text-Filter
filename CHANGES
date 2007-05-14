@@ -1,3 +1,8 @@
+Text::Filter 1.9
+================
+
+ * Removed 'use Encode' from Text::Filter::Cooked.
+
 Text::Filter 1.8
 ================
 
