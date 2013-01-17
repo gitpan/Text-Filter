@@ -1,12 +1,12 @@
 # Makefile.PL -- Makefile for Text::Filter
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Thu May  3 14:46:55 2007
-# Update Count    : 21
+# Last Modified On: Thu Jan 17 13:26:26 2013
+# Update Count    : 22
 # Status          : Stable
 
 # Verify perl version.
-require 5.006;
+require 5.8.8;
 
 use ExtUtils::MakeMaker;
 

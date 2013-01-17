@@ -1,3 +1,5 @@
+#! perl
+
 package Text::Filter::Cooked;
 
 use strict;
@@ -502,7 +504,7 @@ Johan Vromans (jvromans@squirrel.nl) wrote this module.
 
 =head1 COPYRIGHT AND DISCLAIMER
 
-This program is Copyright 2007 by Squirrel Consultancy. All
+This program is Copyright 2007,2013 by Squirrel Consultancy. All
 rights reserved.
 
 This program is free software; you can redistribute it and/or modify

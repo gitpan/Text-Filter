@@ -1,10 +1,11 @@
+#! perl
+
 package Text::Filter;
 
-# CVS Info        : $Id: Filter.pm,v 1.10 2007/05/14 07:34:07 jv Exp $
 # Author          : Johan Vromans
 # Last Modified By: Johan Vromans
-# Last Modified On: Mon May 14 09:29:39 2007
-# Update Count    : 164
+# Last Modified On: Thu Jan 17 13:26:07 2013
+# Update Count    : 169
 # Status          : Released
 
 =head1 NAME
@@ -387,7 +388,7 @@ Johan Vromans (jvromans@squirrel.nl) wrote this module.
 
 =head1 COPYRIGHT AND DISCLAIMER
 
-This program is Copyright 1998,2007 by Squirrel Consultancy. All
+This program is Copyright 1998,2013 by Squirrel Consultancy. All
 rights reserved.
 
 This program is free software; you can redistribute it and/or modify
@@ -403,11 +404,12 @@ GNU General Public License or the Artistic License for more details.
 
 =cut
 
+use 5.8.8;
 use strict;
 use warnings;
 use warnings::register;
 
-our $VERSION = "1.9";
+our $VERSION = "1.10";
 
 use IO::File;
 use Carp;
@@ -546,7 +548,7 @@ sub set_output {
 	}
 	elsif ( ref($handler) eq 'ARRAY' ) {
 	    $output = sub { push (@$handler, shift) };
-	    @$handler = () unless defined @$handler;
+	    @$handler = () unless @$handler;
 	}
 	elsif ( ref($handler) eq 'SCALAR' ) {
 	    $output = sub { $$handler .= shift };
